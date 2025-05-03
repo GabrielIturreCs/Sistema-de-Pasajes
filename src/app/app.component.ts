@@ -14,6 +14,8 @@ import { NavbarComponent } from '../componentes/navbar/navbar.component';
   styleUrl: './app.component.css'
   
 })
+
+
 export class AppComponent {
   title = 'serviceangular';
   toggleTheme(): void {

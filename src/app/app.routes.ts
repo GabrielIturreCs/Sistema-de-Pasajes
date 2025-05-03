@@ -8,12 +8,12 @@ export const routes: Routes = [{
 
 
 
-    path: 'SistemaPasajes',
+    path: 'sistemapasajes',
     component: Punto4Component
 },
 {
     path: '**',
-    redirectTo: 'SistemaPasajes',
+    redirectTo: 'sistemapasajes',
 },{
     path: 'navbar',
     component: NavbarComponent
