@@ -5,12 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
-
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:serviceangular": "node dist/serviceangular/server/server.mjs"
-
-
   },
   "private": true,
   "dependencies": {
