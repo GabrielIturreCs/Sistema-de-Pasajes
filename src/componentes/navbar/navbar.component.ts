@@ -1,21 +1,22 @@
+import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+RouterLinkActive;
+
 import { CommonModule } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { NavbarComponent } from '../componentes/navbar/navbar.component';
-
-
-
+import { RouterLinkActive } from '@angular/router';
 @Component({
+  selector: 'app-navbar',
 
-  // selector: 'app-root',
-  selector: 'app-root',
-  imports: [RouterOutlet, CommonModule,NavbarComponent  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
-  
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css'],
+
 })
-export class AppComponent {
-  title = 'serviceangular';
+export class NavbarComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
   toggleTheme(): void {
     const body = document.querySelector('body');
     const icon = document.querySelector('#dl-icon');

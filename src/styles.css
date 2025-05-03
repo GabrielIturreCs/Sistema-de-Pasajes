@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    /* Degradados dinámicos */
+    --primary-gradient: linear-gradient(135deg, #ff1f6b, #ff6f00, #ffcc00);
+    --secondary-gradient: linear-gradient(135deg, #00f7ff, #0066ff);
+    --tertiary-gradient: linear-gradient(135deg, #ff00cc, #cc00ff);
+    --accent-color: #00ff99;
+    --dark-bg: #0a0a0a;
+    --light-bg: #f0f4f8;
+    --card-bg: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-light: #ffffff;
+    --danger-color: #ff3366;
+    --success-color: #00cc66;
+    --warning-color: #ffcc00;
+    --info-color: #00ccff;
+    --muted-text: rgba(26, 26, 26, 0.7);
+  }

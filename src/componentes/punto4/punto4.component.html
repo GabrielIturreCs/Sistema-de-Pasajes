@@ -1,0 +1,202 @@
+
+
+<br>
+<br>
+<!-- Hero Section -->
+<div class="container-fluid hero-section text-center position-relative">
+  <div class="container py-4 ">
+    <h1 class="display-5 fw-bold mb-3">Flecha Bus Gabriel Version</h1>
+    <p class="lead mb-4">Sistema de venta de boletos Flecha Bus</p>
+    <p class="lead mb-4">¡Aprovecha nuestras ofertas y descuentos!</p>
+  </div>
+</div>
+
+<!-- Formulario con degradados y animaciones -->
+<div class="container py-4">
+  <div class="card card-shadow border-0 rounded-4 p-4 mb-5 fade-in">
+    <h2 class="text-center fw-bold mb-4">
+      {{ editarPasajeSeleccionado ? 'Editar Pasaje' : 'Compra de Pasaje' }}
+    </h2>
+    
+    <form #boletoForm="ngForm" id="root">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input 
+              type="text"
+              class="form-control"
+              id="dni"
+              name="dni"
+              maxlength="8"
+              pattern="^[0-9]{8}$"
+              required
+              [(ngModel)]="pasajes.dni"
+              #dni="ngModel">
+            <label for="dni">DNI</label>
+          
+            <div class="text-danger small mt-1" *ngIf="dni.invalid && dni.touched">
+              <span *ngIf="pasajes.dni && pasajes.dni.length !== 8">Debe tener exactamente 8 dígitos.</span>
+              
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="number" class="form-control" id="precio" name="precio" [(ngModel)]="pasajes.precio" (input)="calcularDescuento()" required>
+            <label for="precio">Precio</label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-floating">
+            <select class="form-select" id="categoria" name="categoriaTurista"
+              [(ngModel)]="pasajes.CategoriaTurista"
+              (change)="calcularDescuento()" required>
+              <option [ngValue]="1">Menor</option>
+              <option [ngValue]="2">Adulto</option>
+              <option [ngValue]="3">Jubilado</option>
+            </select>
+            <label for="categoria">Categoría de Turista</label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="date" class="form-control" id="fechaCompra" name="fechaCompra" [(ngModel)]="pasajes.FechaCompra" required>
+            <label for="fechaCompra">Fecha de Compra</label>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-floating">
+            <input 
+              type="email" 
+              class="form-control" 
+              id="email" 
+              name="email" 
+              [(ngModel)]="pasajes.email" 
+              #email="ngModel"
+              
+              maxlength="50"
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              [ngClass]="{
+                'is-invalid': email.invalid && (email.dirty || email.touched),
+                'is-valid': email.valid && email.touched && email.dirty
+              }"
+            >
+            <label for="email">Email</label>
+        
+            <div class="text-danger small mt-1" *ngIf="email.invalid && (email.dirty || email.touched)">
+              <span *ngIf="email.errors?.['email']">Formato de email inválido.</span>
+              <span *ngIf="email.errors?.['pattern']">Debe contener un 'Arroba' y un dominio válido (ej: .com).</span>
+              <span *ngIf="email.errors?.['maxlength']">No puede superar los 50 caracteres.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 price-display" *ngIf="pasajes.precio && pasajes.CategoriaTurista">
+          Precio final con descuento: <strong>{{ precioFinal | currency:'ARS' }}</strong>
+        </div>
+
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-gradient btn-lg px-5" 
+          [disabled]="!boletoForm.form.valid" (click)="guardarPasaje()">
+          <i class="bi bi-bus-front-fill me-2"></i>
+          {{ editarPasajeSeleccionado ? 'Guardar Cambios' : 'Guardar Pasaje' }}
+        </button>
+        <button *ngIf="editarPasajeSeleccionado" type="button"
+  class="btn btn-gradient btn-lg px-5 gap-5 " (click)="reiniciarFormulario()" >
+  Cancelar edición
+</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Lista de pasajes vendidos -->
+  <div class="card card-shadow border-0 rounded-4 p-4 mb-5 fade-in" style="animation-delay: 0.2s;">
+    <h4 class="mb-4">Boletos Vendidos</h4>
+    
+    <div class="table-section">
+      <table class="table table-hover align-middle mb-0">
+  
+        <thead class="table-light">
+          <tr>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>Fecha</th>
+            <th>Categoría</th>
+            <th>Precio Final</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of listaPasajes; track p.dni) {
+            <tr class="fade-in" style="animation-duration: 0.5s;">
+              <td>{{ p.dni }}</td>
+              <td>{{ p.email }}</td>
+              <td>{{ p.FechaCompra | date:'dd/MM/yyyy' }}</td>
+              <td>
+                <span class="category-badge 
+                  {{ p.CategoriaTurista === 1 ? 'menor' : 
+                     p.CategoriaTurista === 2 ? 'adulto' : 'jubilado' }}">
+                  {{ p.CategoriaTurista === 1 ? 'Menor' : 
+                     p.CategoriaTurista === 2 ? 'Adulto' : 'Jubilado' }}
+                </span>
+              </td>
+              <td>{{ calcularPrecioConDescuento(p.precio, p.CategoriaTurista) | currency:'ARS' }}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary me-2" (click)="editarPasaje(p)">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" (click)="eliminarPasaje(p.dni)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Resumen de ventas -->
+  <div class="row g-4 fade-in" style="animation-delay: 0.4s;">
+    <div class="col-12">
+      <div class="card card-shadow border-0 rounded-4 p-4">
+        <h4 class="mb-4">Resumen de Ventas</h4>
+        
+        <div class="row g-3">
+          <div class="col-sm-6 col-md-3">
+            <div class="summary-item">
+              <span>Menores</span>
+              <span class="badge bg-info-subtle text-info-emphasis rounded-pill fs-5">{{ resumen.menores }}</span>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-md-3">
+            <div class="summary-item">
+              <span>Adultos</span>
+              <span class="badge bg-success-subtle text-success-emphasis rounded-pill fs-5">{{ resumen.adultos }}</span>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-md-3">
+            <div class="summary-item">
+              <span>Jubilados</span>
+              <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill fs-5">{{ resumen.jubilados }}</span>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-md-3">
+            <div class="total-item">
+              Total Vendidos: <br>
+              <span class="display-6 fw-bold">{{ resumen.total }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

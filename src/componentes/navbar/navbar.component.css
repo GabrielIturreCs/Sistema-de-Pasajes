@@ -1,0 +1,103 @@
+:root {
+    --navbar-gradient: linear-gradient(135deg, #ff1f6b, #ff6f00, #ffcc00);
+    --navbar-text: #ffffff;
+    --hover-gradient: linear-gradient(135deg, #00f7ff, #0066ff);
+    --active-bg: rgba(255, 255, 255, 0.1);
+    --toggle-gradient: linear-gradient(135deg, #00ff99, #0066ff);
+  }
+
+  .navbar {
+    background: var(--navbar-gradient);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-brand {
+    font-weight: 700;
+    font-size: 1.25rem;
+    background: linear-gradient(45deg, #ffffff, #fff3cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.3s ease;
+  }
+
+  .navbar-brand:hover {
+    transform: scale(1.05);
+  }
+
+  .nav-link {
+    color: var(--navbar-text) !important;
+    font-weight: 500;
+    position: relative;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--hover-gradient);
+  }
+
+  .nav-item.active .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--toggle-gradient);
+  }
+
+  .btn-toggle-theme {
+    background-color: #000 !important; /* Fondo negro siempre */
+    border: none;
+    color: white !important; /* Texto blanco para contraste */
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-toggle-theme:hover {
+    transform: rotate(45deg) scale(1.1);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  }
+  
+  .btn-toggle-theme i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .btn-toggle-theme:hover i {
+    transform: rotate(-45deg);
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+
+  @media (max-width: 991.98px) {
+    .navbar-collapse {
+      background: rgba(0, 0, 0, 0.95);
+      margin-top: 1rem;
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+    
+    .navbar-nav {
+      text-align: center;
+    }
+    
+    .nav-item {
+      margin: 0.5rem 0;
+    }
+  }
