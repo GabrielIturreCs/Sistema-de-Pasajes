@@ -89,7 +89,7 @@
         
             <div class="text-danger small mt-1" *ngIf="email.invalid && (email.dirty || email.touched)">
               <span *ngIf="email.errors?.['email']">Formato de email inválido.</span>
-              <span *ngIf="email.errors?.['pattern']">Debe contener un 'Arroba' y un dominio válido (ej: .com).</span>
+              <span *ngIf="email.errors?.['pattern']">Debe contener un 'arroba' y un dominio válido (ej: .com).</span>
               <span *ngIf="email.errors?.['maxlength']">No puede superar los 50 caracteres.</span>
             </div>
           </div>
